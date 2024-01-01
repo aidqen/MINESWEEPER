@@ -1,22 +1,93 @@
 body {
     text-align: center;
-    font-family: monospace;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    overflow: hidden;
+    background: url("https://media1.giphy.com/media/l3vRnoppYtfEbemBO/giphy.gif?cid=ecf05e47mjv7xdy7b1a84u6sol3t04xuvdpo4q74hnedfwex&ep=v1_gifs_search&rid=giphy.gif&ct=g") center center fixed;
+    background-size: cover;
 }
 
 .header {
     width: 300px;
-    height: 100px;
+    height: 140px;
     margin: auto;
-    border: 2px solid black;
+    border: 2px solid white;
     border-radius: 5px;
     padding: 0px auto;
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.level {
+
+.line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+button {
+    /* Add padding and margin to provide space inside and around the button */
+  padding: 10px 10px;
+  margin: 5px;
+
+  /* Set the background color and text color */
+  color: black;
+  font-weight: bold;
+
+  /* Add border and border-radius for a rounded look */
+  border: 1px solid black;
+  border-radius: 100px;
+
+  /* Add a subtle hover effect */
+  transition: background-color 0.3s ease;
+}
+
+.beginner {
+    background-color: lightgreen;
+}
+.intermediate {
+    background-color:darkorange;
+}
+.expert {
+    background-color: darkred;
+}
+
+button:hover {
+    background-color: #110327;
+    color: white;
+  }
+  
+  /* Change background color on active (when the button is clicked) */
+  button:active {
+    background-color: #090a1e;
+    color: red
+  }
+
+.flag-count,
+.timer {
+    margin-inline: auto;
+    font-size: 15px;
+    padding-inline: 10px;
+}
+
+.timer {
     margin: auto;
+}
+
+
+.smiley {
+    margin: auto;
+    font-size: 30px;
 }
 
 .table-container {
@@ -24,16 +95,18 @@ body {
 }
 
 table {
-    margin: 100px auto;
+    margin: 40px auto;
     border-collapse: collapse;
-    border: 5px solid black;
+    border: 2px solid white
 }
 
 td {
-    border: 2px solid black;
+    border: 2px solid white;
+    background-color: rgb(20, 21, 29);
+    ;
     font-size: 20px;
-    height: 65px;
-    width: 65px;
+    height: 2.7rem;
+    width: 2.7rem;
     transition: 0.3s;
 }
 
@@ -43,6 +116,10 @@ td:hover {
 }
 
 .hidden {
-    border:outset lightgray 3.5px;
-    background-color: rgb(182, 182, 182);
+    border: outset lightgray 3.5px;
+    background-color: rgb(36, 37, 51);
+}
+
+.unseen {
+    display: none;
 }

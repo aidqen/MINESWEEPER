@@ -17,7 +17,14 @@ function buildBoard(size) {
 }
 
 function renderBoard() {
-  const table = document.querySelector('.table-container')
+  const elTable = document.querySelector('.table-container')
+  const elFlagCount = document.querySelector('.flag-count')
+  const smiley = document.querySelector('.smiley')
+
+  gArrLocations = createArrOfLocations()
+  smiley.innerHTML = PLAYING_EMOJI
+  gFlagCount = gLevel.MINES
+    elFlagCount.innerText = `Flag Count : ${gFlagCount}`
 
   var innerHTML = '<table><tbody>'
   for (var i = 0; i < gBoard.length; i++) {
@@ -33,7 +40,7 @@ function renderBoard() {
   }
   console.log(gBoard)
   innerHTML += '</tbody></table>'
-  table.innerHTML = innerHTML
+  elTable.innerHTML = innerHTML
 }
 
 function renderCell(location, value) {
@@ -42,9 +49,6 @@ function renderCell(location, value) {
     elCell.classList.remove('hidden')
 }
 
-function expandBoard(params) {
-    
-}
 
 function drawNum(location) {
   var randIdx = getRandomInt(0, gArrLocations.length - 1)
@@ -81,10 +85,20 @@ function cellValue(location) {
 }
   
 function currDomLocation(elCell) {
-    const i = elCell.classList.item(1).charAt(5)
-    const j = elCell.classList.item(1).charAt(7)
+    const item = elCell.classList.item(1)
+    const parts = item.split('-')
+
+    const i = parts[1]
+    const j = parts[2]
+    
     return {i,j}
 }
+
+function resetTimer() {
+    const elTimer = document.querySelector('.timer')
+    clearInterval(gInterval)
+    elTimer.innerText = 'Timer : 0'
+  }
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
