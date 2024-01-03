@@ -6,10 +6,13 @@ function buildBoard(size) {
     board.push([])
     for (var j = 0; j < size; j++) {
       board[i][j] = {
-        minesAroundCount: 0,
+        minesAroundCount: '',
         isShown: false,
         isMine: false,
         isMarked: false,
+        isExpand: false,
+        i,
+        j,
       }
     }
   }
@@ -49,9 +52,19 @@ function renderCell(location, value) {
     elCell.classList.remove('hidden')
 }
 
+function renderClass(location, action, elClass) {
+  const elCell = document.querySelector(`.cell-${location.i}-${location.j}`)
+  if (action === 'remove') {
+    elCell.classList.remove(elClass)
+  }
+  if (action === 'add') {
+    elCell.classList.add(elClass)
+  }
+}
 
 function drawNum(location) {
   var randIdx = getRandomInt(0, gArrLocations.length - 1)
+
 
   while (
     gArrLocations[randIdx].i === +location.i &&
@@ -78,9 +91,16 @@ function createArrOfLocations() {
   return arr
 }
 
+function disappear(element) {
+  element.classList.add('unseen')
+}
+
 function cellValue(location) {
     if (gBoard[location.i][location.j].isMine) cell = MINE_IMG
     else var cell = gBoard[location.i][location.j].minesAroundCount
+    if (cell.minesAroundCount === 0) {
+      cell = ''
+    }
     return cell
 }
   
@@ -93,12 +113,6 @@ function currDomLocation(elCell) {
     
     return {i,j}
 }
-
-function resetTimer() {
-    const elTimer = document.querySelector('.timer')
-    clearInterval(gInterval)
-    elTimer.innerText = 'Timer : 0'
-  }
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min

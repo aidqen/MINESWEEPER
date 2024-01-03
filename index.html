@@ -9,24 +9,33 @@
   <body onload="onInit()">
 
     <h1>Minesweeper</h1>
+      <div class="toggle" onclick="darkModeToggle(this)">&#9728; </div>
     <div class="header">
-      <div class="line">
-        <div class="flag-count">Flags: 0</div>
-        <div class="timer">Timer: 0</div>
-      </div>
-      <div class="line">
-        <div class="smiley" onclick="restartGame()"></div>
-      </div>
-      <div class="line">
-        <button class="level beginner" onclick="expandBoard(4,2)">Beginner</button>
-        <button class="level intermediate" onclick="expandBoard(8,10)">Intermediate</button>
-        <button class="level expert" onclick="expandBoard(12,32)">Expert</button>
+      <div class="lines">
+        <div class="line">
+          <div class="flag-count">Flags: 0</div>
+          <div class="timer">Timer: 0</div>
+        </div>
+        <div class="line">
+          <div class="smiley" onclick="restartGame()"></div>
+        </div>
+        <div class="line">
+          <button class="level beginner" onclick="expandBoard(4,2)">Beginner</button>
+          <button class="level intermediate" onclick="expandBoard(8,10)">Intermediate</button>
+          <button class="level expert" onclick="expandBoard(12,20)">Expert</button>
       </div>
     </div>
-<div class="game-over unseen" >You win!</div>
+        <div class="hint-container">
+          <button class="hint" onclick="onClickHint(this)">Safe Click</button>
+          <div class="hint-available">3 clicks available</div>
+      </div>
+    </div>
+<div class="game-over unseen" onclick="disappear(this)">You win!</div>
     <div class="table-container"></div>
     <script src="js/util.js"></script>
     <script src="js/neighbors.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/hints.js"></script>
     <script src="js/game.js"></script>
 
     <script>

@@ -1,11 +1,14 @@
 'use strict'
 
+const MOON_IMG = '&#127769;'
+const SUN_IMG = '&#9728;'
 const MINE_IMG = '&#128163'
 const FLAG_IMG = '&#128681'
 const WIN_EMOJI = '&#128526'
 const PLAYING_EMOJI = '&#128522'
 const LOSE_EMOJI = '&#128557'
 
+var gTheme = 'dark'
 var gBoard
 var gLevel = {
   SIZE: 4,
@@ -20,6 +23,7 @@ var gGame = {
 var gArrLocations
 var gFlagCount
 var gInterval
+var gClickedHint
 
 function onInit() {
   gBoard = buildBoard(gLevel.SIZE)
@@ -28,7 +32,6 @@ function onInit() {
 
 function onCellClicked(elCell) {
   const location = currDomLocation(elCell)
-  console.log(Date.now());
 
   if (!gGame.isOn) {
     //IF GAME ISN'T ON
@@ -50,7 +53,7 @@ function onCellClicked(elCell) {
     gFlagCount++
     updateFlagCount()
   }
-  
+
   gBoard[location.i][location.j].isShown = true
   isGameOver(location)
   renderCell(location, cellValue(location))
@@ -87,18 +90,25 @@ function updateFlagCount() {
 
 function isGameOver(location) {
   if (gBoard[location.i][location.j].isMine) {
-    console.log('hi')
     gameOver('lose')
     return
   }
-  for (var i = 0 ; i < gBoard.length ; i++) {
-   for (var j = 0 ; j < gBoard[i].length ; j++) {
-    if (!gBoard[i][j].isShown && !gBoard[i][j].isMine) {
-      return
+  for (var i = 0; i < gBoard.length; i++) {
+    for (var j = 0; j < gBoard[i].length; j++) {
+      if (!gBoard[i][j].isShown && !gBoard[i][j].isMine) {
+        return
+      }
     }
-   }
   }
   gameOver('win')
+}
+
+function loserRender() {
+  for (var i = 0 ; i < gBoard.length ; i++) {
+    for (var j = 0 ; j < gBoard[i].length ; j++) {
+      renderCell({i,j},cellValue({i,j}))
+    }
+  }
 }
 
 function gameOver(status) {
@@ -111,19 +121,23 @@ function gameOver(status) {
     smiley.innerHTML = WIN_EMOJI
   } else {
     gameOver.innerText = 'You Lose!'
+    loserRender()
     smiley.innerHTML = LOSE_EMOJI
   }
 }
 
-function renderTimer() {
-  const elTimer = document.querySelector('.timer')
-  const startTime = Date.now()
-  gInterval = 0
-  gInterval = setInterval(() => {
-    var currTime = (Date.now() - startTime) / 1000
-    elTimer.innerText = `Timer : ${currTime.toFixed(1)}`
-  }, 100);
+function drawSafeSpace() {
+  const safe = []
+  for (var i = 0; i < gBoard.length; i++) {
+    for (var j = 0; j < gBoard[i].length; j++) {
+      if (!gBoard[i][j].isMine && !gBoard[i][j].isShown) {
+        safe.push({ i, j })
+      }
+    }
+  }
+  return safe
 }
+
 
 function inputRandomBombs(location) {
   for (var i = 0; i < gLevel.MINES; i++) {
@@ -132,16 +146,47 @@ function inputRandomBombs(location) {
   }
 }
 
+function changeTableSetting() {
+  var elCells = [...document.querySelectorAll('td')]
+  console.log(elCells);
+  console.log(gTheme === 'light ');
 
+  if (gTheme === 'light') {
+    console.log('hi')
+    elCells.forEach(cell => {
+      cell.classList.add('light-mode')
+    });
+  } else {
+    elCells.forEach(cell => {
+      cell.classList.remove('light-mode')
+    });
+  }
+  
+}
+
+function darkModeToggle(element) {
+  console.log(gTheme);
+  if (gTheme === 'dark') {
+    gTheme = 'light'
+    element.innerHTML = MOON_IMG
+    changeTableSetting(gTheme)
+  } else {
+    gTheme = 'dark'
+    element.innerHTML = SUN_IMG
+    changeTableSetting(gTheme)
+  }
+}
 
 function restartGame() {
   const gameOver = document.querySelector('.game-over')
-
-  resetTimer()
+  
   gGame.isOn = false
+  resetTimer()
+  restartHints()
   gameOver.classList.add('unseen')
   gBoard = buildBoard(gLevel.SIZE)
   renderBoard()
+  changeTableSetting()
 }
 
 function expandBoard(size, mines) {
