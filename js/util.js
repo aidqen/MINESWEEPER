@@ -10,13 +10,18 @@ function buildBoard(size) {
         isShown: false,
         isMine: false,
         isMarked: false,
-        isExpand: false,
-        i,
-        j,
       }
     }
   }
   return board
+}
+
+function renderEveryCell(action, elClass) {
+  for (var i = 0; i < gBoard.length; i++) {
+    for (var j = 0; j < gBoard[i].length; j++) {
+      renderClass({ i, j }, action, elClass)
+    }
+  }
 }
 
 function renderBoard() {
@@ -27,16 +32,15 @@ function renderBoard() {
   gArrLocations = createArrOfLocations()
   smiley.innerHTML = PLAYING_EMOJI
   gFlagCount = gLevel.MINES
-    elFlagCount.innerText = `Flag Count : ${gFlagCount}`
+  elFlagCount.innerText = `Flag Count : ${gFlagCount}`
 
   var innerHTML = '<table><tbody>'
   for (var i = 0; i < gBoard.length; i++) {
     innerHTML += '<tr>'
     for (var j = 0; j < gBoard[0].length; j++) {
-      
       var className = `cell cell-${i}-${j} hidden`
 
-        innerHTML += `<td class="${className}"
+      innerHTML += `<td class="${className}"
             onclick="onCellClicked(this)" onContextMenu="onRightClick(this)"></td>`
     }
     innerHTML += '</tr>'
@@ -47,9 +51,11 @@ function renderBoard() {
 }
 
 function renderCell(location, value) {
-    const elCell = document.querySelector(`.cell-${location.i}-${location.j}`)
-    elCell.innerHTML = value
-    elCell.classList.remove('hidden')
+  console.log('location', location)
+  const elCell = document.querySelector(`.cell-${location.i}-${location.j}`)
+  elCell.innerHTML = value
+
+  elCell.classList.remove('hidden')
 }
 
 function renderClass(location, action, elClass) {
@@ -64,7 +70,6 @@ function renderClass(location, action, elClass) {
 
 function drawNum(location) {
   var randIdx = getRandomInt(0, gArrLocations.length - 1)
-
 
   while (
     gArrLocations[randIdx].i === +location.i &&
@@ -96,22 +101,22 @@ function disappear(element) {
 }
 
 function cellValue(location) {
-    if (gBoard[location.i][location.j].isMine) cell = MINE_IMG
-    else var cell = gBoard[location.i][location.j].minesAroundCount
-    if (cell.minesAroundCount === 0) {
-      cell = ''
-    }
-    return cell
+  if (gBoard[location.i][location.j].isMine) cell = MINE_IMG
+  else var cell = gBoard[location.i][location.j].minesAroundCount
+  if (cell.minesAroundCount === 0) {
+    cell = ''
+  }
+  return cell
 }
-  
-function currDomLocation(elCell) {
-    const item = elCell.classList.item(1)
-    const parts = item.split('-')
 
-    const i = parts[1]
-    const j = parts[2]
-    
-    return {i,j}
+function currDomLocation(elCell) {
+  const item = elCell.classList.item(1)
+  const parts = item.split('-')
+
+  const i = parts[1]
+  const j = parts[2]
+
+  return { i, j }
 }
 
 function getRandomInt(min, max) {

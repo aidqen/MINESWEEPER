@@ -37,11 +37,6 @@ function expandShown(location) {
         if (i < 0 || i >= gBoard.length) continue
         for (var j = jIdx - 1; j <= jIdx + 1; j++) {
           if (j < 0 || j >= gBoard[i].length) continue
-          console.log('i - idx', iIdx)
-          console.log('i', i)
-          console.log('j - idx', jIdx)
-          console.log('j', j)
-          console.log('currLocationValue', currLocation)
           // if (i === location.i && j === location.j) continue
           expandShown({ i, j });
         }

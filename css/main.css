@@ -109,7 +109,7 @@ button:active {
 .table-container {
     margin: auto;
     position: relative;
-
+    
 }
 
 .hint-container {
@@ -117,8 +117,9 @@ button:active {
     justify-content: flex-end;
     /* position: absolute; */
     flex-direction: column;
+    margin-bottom: 30px;
     font-size: 25px;
-    width: 200px;
+    width: 100px;
     height: 10px;
 }
 
@@ -183,7 +184,6 @@ td:hover {
 
 .hint {
     cursor: pointer;
-    height: 40px;
     border-radius: 10px;
 }
 
@@ -194,4 +194,15 @@ td:hover {
     right: 0;
     font-size: 55px;
     margin: 20px 50px;
+}
+
+.hint-active {
+    background-color:darkred;
+    color: black;
+}
+
+.hint-active:hover {
+    background-color: #110327;
+    color: white;
+
 }

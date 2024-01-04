@@ -42,6 +42,7 @@ function onCellClicked(elCell) {
     updateNegCount()
   }
   //IF GAME IS ON ALREADY
+
   if (
     !gBoard[location.i][location.j].minesAroundCount &&
     !gBoard[location.i][location.j].isMine
@@ -53,6 +54,7 @@ function onCellClicked(elCell) {
     gFlagCount++
     updateFlagCount()
   }
+
 
   gBoard[location.i][location.j].isShown = true
   isGameOver(location)
@@ -148,9 +150,6 @@ function inputRandomBombs(location) {
 
 function changeTableSetting() {
   var elCells = [...document.querySelectorAll('td')]
-  console.log(elCells);
-  console.log(gTheme === 'light ');
-
   if (gTheme === 'light') {
     console.log('hi')
     elCells.forEach(cell => {
