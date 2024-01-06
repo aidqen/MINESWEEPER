@@ -45,17 +45,22 @@ function renderBoard() {
     }
     innerHTML += '</tr>'
   }
-  console.log(gBoard)
   innerHTML += '</tbody></table>'
   elTable.innerHTML = innerHTML
 }
 
 function renderCell(location, value) {
-  console.log('location', location)
   const elCell = document.querySelector(`.cell-${location.i}-${location.j}`)
   elCell.innerHTML = value
 
   elCell.classList.remove('hidden')
+}
+
+function unrenderCell(location) {
+  const elCell = document.querySelector(`.cell-${location.i}-${location.j}`)
+  elCell.innerHTML = ''
+
+  elCell.classList.add('hidden')
 }
 
 function renderClass(location, action, elClass) {
@@ -75,7 +80,6 @@ function drawNum(location) {
     gArrLocations[randIdx].i === +location.i &&
     gArrLocations[randIdx].j === +location.j
   ) {
-    console.log('hi')
     randIdx = getRandomInt(0, gArrLocations.length - 1)
   }
   var num = gArrLocations[randIdx]

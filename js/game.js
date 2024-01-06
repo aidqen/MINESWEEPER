@@ -43,6 +43,12 @@ function onCellClicked(elCell) {
   }
   //IF GAME IS ON ALREADY
 
+  if (gHintActive) {
+    hintActivate(elCell)
+    return
+  }
+
+
   if (
     !gBoard[location.i][location.j].minesAroundCount &&
     !gBoard[location.i][location.j].isMine

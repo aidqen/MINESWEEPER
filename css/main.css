@@ -108,19 +108,16 @@ button:active {
 
 .table-container {
     margin: auto;
-    position: relative;
-    
 }
 
 .hint-container {
     display: flex;
-    justify-content: flex-end;
-    /* position: absolute; */
-    flex-direction: column;
+    justify-content: space-around;
+    flex-direction: row;
     margin-bottom: 30px;
     font-size: 25px;
     width: 100px;
-    height: 10px;
+    height: 100px;
 }
 
 .hint-available {
@@ -204,5 +201,12 @@ td:hover {
 .hint-active:hover {
     background-color: #110327;
     color: white;
+}
 
+.safeclick {
+    flex-direction: column;
+}
+
+.megahint {
+    background-color:crimson;
 }
